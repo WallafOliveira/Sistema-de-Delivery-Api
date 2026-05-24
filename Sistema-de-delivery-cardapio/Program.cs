@@ -1,0 +1,53 @@
+using DataApplications.Data;
+using Microsoft.EntityFrameworkCore;
+using Sistema_de_delivery_cardapio.Application.UseCases.Produtos;
+using Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes;
+using Sistema_de_delivery_cardapio.Domain.Interfaces;
+using Sistema_de_delivery_cardapio.Infrastructure.Repositories;
+
+var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
+
+// Banco de dados centralizado no DataApplications
+builder.Services.AddDbContext<DeliveryDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+// Repository Registration
+builder.Services.AddScoped<IRestauranteRepository, RestauranteRepository>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+
+// Use Cases Registration - Restaurante
+builder.Services.AddScoped<CreateRestauranteUseCase>();
+builder.Services.AddScoped<UpdateRestauranteUseCase>();
+builder.Services.AddScoped<ListarRestaurantesUseCase>();
+builder.Services.AddScoped<ListarRestaurantesAbertosUseCase>();
+builder.Services.AddScoped<BuscarRestaurantePorIdUseCase>();
+
+// Use Cases Registration - Produto
+builder.Services.AddScoped<CreateProdutoUseCase>();
+builder.Services.AddScoped<UpdateProdutoUseCase>();
+builder.Services.AddScoped<ListarProdutoUseCase>();
+builder.Services.AddScoped<ListarProdutosPorRestauranteUseCase>();
+
+builder.Services.AddControllers();
+
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "Sistema de Delivery - Cardápio", Version = "v1" });
+});
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cardápio v1"));
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();

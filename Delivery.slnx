@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../Arquitetura/Sistema-de-delivery-back/DataApplications/DataApplications.csproj" />
+  <Project Path="../Delivery-Api/Sistema-de-delivery-back/Sistema-de-delivery-back.csproj" />
+  <Project Path="Sistema-de-delivery-cardapio/Sistema-de-delivery-cardapio.csproj" />
+  <Project Path="Sistema-de-delivery-pedido/Sistema-de-delivery-pedido.csproj" />
+</Solution>
