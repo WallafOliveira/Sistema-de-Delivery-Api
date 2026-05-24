@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="../Arquitetura/Sistema-de-delivery-back/DataApplications/DataApplications.csproj" />
-  <Project Path="../Delivery-Api/Sistema-de-delivery-back/Sistema-de-delivery-back.csproj" />
+  <Project Path="DataApplications/DataApplications.csproj" Id="49fc2996-a27c-4fd7-a6b4-2b172bb1ca2e" />
+  <Project Path="Sistema-de-delivery-back/Sistema-de-delivery-back.csproj" Id="6f9584c9-f4ef-4502-9ae5-84fbfded59db" />
   <Project Path="Sistema-de-delivery-cardapio/Sistema-de-delivery-cardapio.csproj" />
   <Project Path="Sistema-de-delivery-pedido/Sistema-de-delivery-pedido.csproj" />
 </Solution>
