@@ -10,6 +10,8 @@ public class DeliveryDbContext : DbContext
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Restaurante> Restaurantes { get; set; }
     public DbSet<Produto> Produtos { get; set; }
+    public DbSet<Pedido> Pedidos { get; set; }
+    public DbSet<ItemPedido> ItensPedido { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -54,6 +56,30 @@ public class DeliveryDbContext : DbContext
                   .WithMany()
                   .HasForeignKey(e => e.RestauranteId)
                   .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Pedido>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Status).IsRequired().HasMaxLength(50);
+            entity.Property(e => e.ValorTotal).IsRequired().HasPrecision(18, 2);
+            entity.Property(e => e.DataCriacao).IsRequired();
+            entity.Property(e => e.DataAtualizacao);
+            entity.Property(e => e.Ativo).IsRequired();
+
+            entity.HasMany(e => e.Itens)
+                  .WithOne()
+                  .HasForeignKey(e => e.PedidoId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ItemPedido>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.NomeProduto).IsRequired().HasMaxLength(150);
+            entity.Property(e => e.ValorUnitario).IsRequired().HasPrecision(18, 2);
+            entity.Property(e => e.ValorTotal).IsRequired().HasPrecision(18, 2);
+            entity.Property(e => e.Quantidade).IsRequired();
         });
     }
 }
