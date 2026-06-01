@@ -1,5 +1,8 @@
 using Sistema_de_delivery_cardapio.Application.DTOs.Produtos;
 using Sistema_de_delivery_cardapio.Domain.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
 {
@@ -12,9 +15,9 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
             _produtoRepository = produtoRepository;
         }
 
-        public IEnumerable<ProdutoDto> Executar()
+        public async Task<IEnumerable<ProdutoDto>> Executar()
         {
-            var produtos = _produtoRepository.ObterTodos();
+            var produtos = await _produtoRepository.ObterTodos();
 
             return produtos.Select(p => new ProdutoDto
             {

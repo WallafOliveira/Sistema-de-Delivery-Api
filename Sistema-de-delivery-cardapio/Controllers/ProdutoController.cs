@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Sistema_de_delivery_cardapio.Application.DTOs.Produtos;
 using Sistema_de_delivery_cardapio.Application.UseCases.Produtos;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sistema_de_delivery_cardapio.Controllers
 {
@@ -26,11 +29,11 @@ namespace Sistema_de_delivery_cardapio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar([FromBody] CreateProdutoDto dto)
+        public async Task<IActionResult> Criar([FromBody] CreateProdutoDto dto)
         {
             try
             {
-                var resultado = _createProdutoUseCase.Executar(dto);
+                var resultado = await _createProdutoUseCase.Executar(dto);
                 return Created("", resultado);
             }
             catch (ArgumentException ex)
@@ -44,14 +47,14 @@ namespace Sistema_de_delivery_cardapio.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Atualizar(Guid id, [FromBody] UpdateProdutoDto dto)
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] UpdateProdutoDto dto)
         {
             try
             {
                 if (id != dto.Id)
                     return BadRequest(new { erro = "O ID da URL não confere com o ID do produto." });
 
-                var resultado = _updateProdutoUseCase.Executar(dto);
+                var resultado = await _updateProdutoUseCase.Executar(dto);
                 return Ok(resultado);
             }
             catch (Exception ex) when (ex.Message == "Produto não encontrado.")
@@ -69,16 +72,16 @@ namespace Sistema_de_delivery_cardapio.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObterTodos()
+        public async Task<IActionResult> ObterTodos()
         {
-            var produtos = _listarProdutosUseCase.Executar();
+            var produtos = await _listarProdutosUseCase.Executar();
             return Ok(produtos);
         }
 
         [HttpGet("restaurante/{restauranteId}")]
-        public IActionResult ObterPorRestaurante(Guid restauranteId)
+        public async Task<IActionResult> ObterPorRestaurante(Guid restauranteId)
         {
-            var produtos = _listarProdutosPorRestauranteUseCase.Executar(restauranteId);
+            var produtos = await _listarProdutosPorRestauranteUseCase.Executar(restauranteId);
 
             if (!produtos.Any())
                 return NotFound(new { mensagem = "Nenhum produto encontrado para este restaurante." });

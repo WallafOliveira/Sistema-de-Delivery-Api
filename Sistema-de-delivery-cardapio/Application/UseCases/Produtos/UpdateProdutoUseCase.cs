@@ -1,5 +1,7 @@
 using Sistema_de_delivery_cardapio.Application.DTOs.Produtos;
 using Sistema_de_delivery_cardapio.Domain.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
 {
@@ -12,24 +14,27 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
             _produtoRepository = produtoRepository;
         }
 
-        public ProdutoDto Executar(UpdateProdutoDto dto)
+        public async Task<ProdutoDto> Executar(UpdateProdutoDto dto)
         {
-            var produto = _produtoRepository.ObterPorId(dto.Id);
+            var produto = await _produtoRepository.ObterPorId(dto.Id);
 
             if (produto == null)
                 throw new Exception("Produto não encontrado.");
 
             produto.AtualizarDetalhes(dto.Nome, dto.Quantidade, dto.Valor);
 
-            _produtoRepository.Atualizar(produto);
+            var produtoAtualizado = await _produtoRepository.Atualizar(dto.Id, produto);
+
+            if (produtoAtualizado == null)
+                throw new Exception("Falha ao atualizar produto.");
 
             return new ProdutoDto
             {
-                Id = produto.Id,
-                RestauranteId = produto.RestauranteId,
-                Nome = produto.Nome,
-                Quantidade = produto.Quantidade,
-                Valor = produto.Valor
+                Id = produtoAtualizado.Id,
+                RestauranteId = produtoAtualizado.RestauranteId,
+                Nome = produtoAtualizado.Nome,
+                Quantidade = produtoAtualizado.Quantidade,
+                Valor = produtoAtualizado.Valor
             };
         }
     }

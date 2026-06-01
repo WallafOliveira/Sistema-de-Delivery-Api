@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Sistema_de_delivery_pedido.Domain.Interfaces;
 
 namespace Sistema_de_delivery_pedido.Application.UseCases.Pedidos
@@ -11,13 +13,13 @@ namespace Sistema_de_delivery_pedido.Application.UseCases.Pedidos
             _pedidoRepository = pedidoRepository;
         }
 
-        public void Executar(Guid id)
+        public async Task Executar(Guid id)
         {
-            var pedido = _pedidoRepository.ObterPorId(id)
+            var pedido = await _pedidoRepository.ObterPorId(id)
                 ?? throw new Exception("Pedido não encontrado.");
 
             pedido.Cancelar();
-            _pedidoRepository.Atualizar(pedido);
+            await _pedidoRepository.Atualizar(id, pedido);
         }
     }
 }

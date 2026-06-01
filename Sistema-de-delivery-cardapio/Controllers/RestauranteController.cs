@@ -1,104 +1,107 @@
 using Microsoft.AspNetCore.Mvc;
 using Sistema_de_delivery_cardapio.Application.DTOs.Restaurantes;
 using Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes;
+using System;
+using System.Threading.Tasks;
 
-namespace Sistema_de_delivery_cardapio.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class RestauranteController : ControllerBase
+namespace Sistema_de_delivery_cardapio.Controllers
 {
-    private readonly CreateRestauranteUseCase _createRestauranteUseCase;
-    private readonly UpdateRestauranteUseCase _updateRestauranteUseCase;
-    private readonly ListarRestaurantesUseCase _listarRestaurantesUseCase;
-    private readonly ListarRestaurantesAbertosUseCase _listarRestaurantesAbertosUseCase;
-    private readonly BuscarRestaurantePorIdUseCase _buscarRestaurantePorIdUseCase;
-
-    public RestauranteController(
-        CreateRestauranteUseCase createRestauranteUseCase,
-        UpdateRestauranteUseCase updateRestauranteUseCase,
-        ListarRestaurantesUseCase listarRestaurantesUseCase,
-        ListarRestaurantesAbertosUseCase listarRestaurantesAbertosUseCase,
-        BuscarRestaurantePorIdUseCase buscarRestaurantePorIdUseCase)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class RestauranteController : ControllerBase
     {
-        _createRestauranteUseCase = createRestauranteUseCase;
-        _updateRestauranteUseCase = updateRestauranteUseCase;
-        _listarRestaurantesUseCase = listarRestaurantesUseCase;
-        _listarRestaurantesAbertosUseCase = listarRestaurantesAbertosUseCase;
-        _buscarRestaurantePorIdUseCase = buscarRestaurantePorIdUseCase;
-    }
+        private readonly CreateRestauranteUseCase _createRestauranteUseCase;
+        private readonly UpdateRestauranteUseCase _updateRestauranteUseCase;
+        private readonly ListarRestaurantesUseCase _listarRestaurantesUseCase;
+        private readonly ListarRestaurantesAbertosUseCase _listarRestaurantesAbertosUseCase;
+        private readonly BuscarRestaurantePorIdUseCase _buscarRestaurantePorIdUseCase;
 
-    [HttpPost]
-    public IActionResult Create([FromBody] CreateRestauranteDto dto)
-    {
-        try
+        public RestauranteController(
+            CreateRestauranteUseCase createRestauranteUseCase,
+            UpdateRestauranteUseCase updateRestauranteUseCase,
+            ListarRestaurantesUseCase listarRestaurantesUseCase,
+            ListarRestaurantesAbertosUseCase listarRestaurantesAbertosUseCase,
+            BuscarRestaurantePorIdUseCase buscarRestaurantePorIdUseCase)
         {
-            var resultado = _createRestauranteUseCase.Execute(dto);
-            return CreatedAtAction(nameof(GetById), new { id = resultado.Id }, resultado);
+            _createRestauranteUseCase = createRestauranteUseCase;
+            _updateRestauranteUseCase = updateRestauranteUseCase;
+            _listarRestaurantesUseCase = listarRestaurantesUseCase;
+            _listarRestaurantesAbertosUseCase = listarRestaurantesAbertosUseCase;
+            _buscarRestaurantePorIdUseCase = buscarRestaurantePorIdUseCase;
         }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(Guid id, [FromBody] UpdateRestauranteDto dto)
-    {
-        try
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateRestauranteDto dto)
         {
-            var resultado = _updateRestauranteUseCase.Execute(id, dto);
-            return Ok(resultado);
+            try
+            {
+                var resultado = await _createRestauranteUseCase.Execute(dto);
+                return CreatedAtAction(nameof(GetById), new { id = resultado.Id }, resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-        catch (Exception ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-    }
 
-    [HttpGet]
-    public IActionResult GetAll()
-    {
-        try
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRestauranteDto dto)
         {
-            var resultado = _listarRestaurantesUseCase.Execute();
-            return Ok(resultado);
+            try
+            {
+                var resultado = await _updateRestauranteUseCase.Execute(id, dto);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
 
-    [HttpGet("abertos")]
-    public IActionResult GetAbertos()
-    {
-        try
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            var resultado = _listarRestaurantesAbertosUseCase.Execute();
-            return Ok(resultado);
+            try
+            {
+                var resultado = await _listarRestaurantesUseCase.Execute();
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-        catch (Exception ex)
+
+        [HttpGet("abertos")]
+        public async Task<IActionResult> GetAbertos()
         {
-            return BadRequest(new { message = ex.Message });
+            try
+            {
+                var resultado = await _listarRestaurantesAbertosUseCase.Execute();
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-    }
 
-    [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
-    {
-        try
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var resultado = _buscarRestaurantePorIdUseCase.Execute(id);
+            try
+            {
+                var resultado = await _buscarRestaurantePorIdUseCase.Execute(id);
 
-            if (resultado == null)
-                return NotFound(new { message = $"Restaurante com ID {id} não encontrado." });
+                if (resultado == null)
+                    return NotFound(new { message = $"Restaurante com ID {id} não encontrado." });
 
-            return Ok(resultado);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

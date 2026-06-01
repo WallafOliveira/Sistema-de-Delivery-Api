@@ -1,28 +1,32 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Sistema_de_delivery_cardapio.Application.DTOs.Restaurantes;
 using Sistema_de_delivery_cardapio.Domain.Interfaces;
 
-namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes;
-
-public class ListarRestaurantesAbertosUseCase
+namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes
 {
-    private readonly IRestauranteRepository _restauranteRepository;
-
-    public ListarRestaurantesAbertosUseCase(IRestauranteRepository restauranteRepository)
+    public class ListarRestaurantesAbertosUseCase
     {
-        _restauranteRepository = restauranteRepository;
-    }
+        private readonly IRestauranteRepository _restauranteRepository;
 
-    public List<RestauranteDto> Execute()
-    {
-        var restaurantes = _restauranteRepository.ListarAbertos();
-
-        return restaurantes.Select(r => new RestauranteDto
+        public ListarRestaurantesAbertosUseCase(IRestauranteRepository restauranteRepository)
         {
-            Id = r.Id,
-            Nome = r.Nome,
-            CPNJ = r.CPNJ,
-            Endereco = r.Endereco,
-            EstaAberto = r.EstaAberto
-        }).ToList();
+            _restauranteRepository = restauranteRepository;
+        }
+
+        public async Task<IEnumerable<RestauranteDto>> Execute()
+        {
+            var restaurantes = await _restauranteRepository.ListarAbertos();
+
+            return restaurantes.Select(r => new RestauranteDto
+            {
+                Id = r.Id,
+                Nome = r.Nome,
+                CPNJ = r.CPNJ,
+                Endereco = r.Endereco,
+                EstaAberto = r.EstaAberto
+            });
+        }
     }
 }

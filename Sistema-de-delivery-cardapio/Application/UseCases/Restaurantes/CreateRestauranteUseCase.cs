@@ -1,31 +1,33 @@
-using DataApplications.Entities;
+using System.Threading.Tasks;
 using Sistema_de_delivery_cardapio.Application.DTOs.Restaurantes;
+using Sistema_de_delivery_cardapio.Domain.Entities;
 using Sistema_de_delivery_cardapio.Domain.Interfaces;
 
-namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes;
-
-public class CreateRestauranteUseCase
+namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes
 {
-    private readonly IRestauranteRepository _restauranteRepository;
-
-    public CreateRestauranteUseCase(IRestauranteRepository restauranteRepository)
+    public class CreateRestauranteUseCase
     {
-        _restauranteRepository = restauranteRepository;
-    }
+        private readonly IRestauranteRepository _restauranteRepository;
 
-    public RestauranteDto Execute(CreateRestauranteDto dto)
-    {
-        var restaurante = new Restaurante(dto.Nome, dto.CPNJ, dto.Endereco);
-
-        _restauranteRepository.Adicionar(restaurante);
-
-        return new RestauranteDto
+        public CreateRestauranteUseCase(IRestauranteRepository restauranteRepository)
         {
-            Id = restaurante.Id,
-            Nome = restaurante.Nome,
-            CPNJ = restaurante.CPNJ,
-            Endereco = restaurante.Endereco,
-            EstaAberto = restaurante.EstaAberto
-        };
+            _restauranteRepository = restauranteRepository;
+        }
+
+        public async Task<RestauranteDto> Execute(CreateRestauranteDto dto)
+        {
+            var restaurante = new Restaurante(dto.Nome, dto.CPNJ, dto.Endereco);
+
+            await _restauranteRepository.Adicionar(restaurante);
+
+            return new RestauranteDto
+            {
+                Id = restaurante.Id,
+                Nome = restaurante.Nome,
+                CPNJ = restaurante.CPNJ,
+                Endereco = restaurante.Endereco,
+                EstaAberto = restaurante.EstaAberto
+            };
+        }
     }
 }

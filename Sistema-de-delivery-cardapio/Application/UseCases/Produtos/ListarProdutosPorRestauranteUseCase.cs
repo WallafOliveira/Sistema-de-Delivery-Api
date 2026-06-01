@@ -1,5 +1,9 @@
 using Sistema_de_delivery_cardapio.Application.DTOs.Produtos;
 using Sistema_de_delivery_cardapio.Domain.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
 {
@@ -12,9 +16,9 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
             _produtoRepository = produtoRepository;
         }
 
-        public IEnumerable<ProdutoDto> Executar(Guid restauranteId)
+        public async Task<IEnumerable<ProdutoDto>> Executar(Guid restauranteId)
         {
-            var produtos = _produtoRepository.ObterPorRestauranteId(restauranteId);
+            var produtos = await _produtoRepository.ObterPorRestauranteId(restauranteId);
 
             return produtos.Select(p => new ProdutoDto
             {

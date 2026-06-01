@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sistema_de_delivery_pedido.Application.DTOs.Pedidos;
 using Sistema_de_delivery_pedido.Application.UseCases.Pedidos;
@@ -32,11 +34,11 @@ namespace Sistema_de_delivery_pedido.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar([FromBody] CreatePedidoDto dto)
+        public async Task<IActionResult> Criar([FromBody] CreatePedidoDto dto)
         {
             try
             {
-                var resultado = _createPedidoUseCase.Executar(dto);
+                var resultado = await _createPedidoUseCase.Executar(dto);
                 return Created("", resultado);
             }
             catch (ArgumentException ex)
@@ -50,14 +52,14 @@ namespace Sistema_de_delivery_pedido.Controllers
         }
 
         [HttpPut("{id}/status")]
-        public IActionResult AtualizarStatus(Guid id, [FromBody] UpdatePedidoStatusDto dto)
+        public async Task<IActionResult> AtualizarStatus(Guid id, [FromBody] UpdatePedidoStatusDto dto)
         {
             try
             {
                 if (id != dto.Id)
                     return BadRequest(new { erro = "O ID da URL não confere com o ID do pedido." });
 
-                var resultado = _atualizarStatusPedidoUseCase.Executar(dto);
+                var resultado = await _atualizarStatusPedidoUseCase.Executar(dto);
                 return Ok(resultado);
             }
             catch (Exception ex) when (ex.Message == "Pedido não encontrado.")
@@ -75,11 +77,11 @@ namespace Sistema_de_delivery_pedido.Controllers
         }
 
         [HttpDelete("{id}/cancelar")]
-        public IActionResult Cancelar(Guid id)
+        public async Task<IActionResult> Cancelar(Guid id)
         {
             try
             {
-                _cancelarPedidoUseCase.Executar(id);
+                await _cancelarPedidoUseCase.Executar(id);
                 return NoContent();
             }
             catch (Exception ex) when (ex.Message == "Pedido não encontrado.")
@@ -93,18 +95,18 @@ namespace Sistema_de_delivery_pedido.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObterTodos()
+        public async Task<IActionResult> ObterTodos()
         {
-            var pedidos = _listarPedidosUseCase.Executar();
+            var pedidos = await _listarPedidosUseCase.Executar();
             return Ok(pedidos);
         }
 
         [HttpGet("{id}")]
-        public IActionResult ObterPorId(Guid id)
+        public async Task<IActionResult> ObterPorId(Guid id)
         {
             try
             {
-                var pedido = _buscarPedidoPorIdUseCase.Executar(id);
+                var pedido = await _buscarPedidoPorIdUseCase.Executar(id);
                 return Ok(pedido);
             }
             catch (Exception ex) when (ex.Message == "Pedido não encontrado.")
@@ -118,9 +120,9 @@ namespace Sistema_de_delivery_pedido.Controllers
         }
 
         [HttpGet("cliente/{clienteId}")]
-        public IActionResult ObterPorCliente(Guid clienteId)
+        public async Task<IActionResult> ObterPorCliente(Guid clienteId)
         {
-            var pedidos = _listarPedidosPorClienteUseCase.Executar(clienteId);
+            var pedidos = await _listarPedidosPorClienteUseCase.Executar(clienteId);
             return Ok(pedidos);
         }
     }

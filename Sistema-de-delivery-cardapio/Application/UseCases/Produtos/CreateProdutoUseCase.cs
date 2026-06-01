@@ -1,6 +1,7 @@
-using DataApplications.Entities;
 using Sistema_de_delivery_cardapio.Application.DTOs.Produtos;
+using Sistema_de_delivery_cardapio.Domain.Entities;
 using Sistema_de_delivery_cardapio.Domain.Interfaces;
+using System.Threading.Tasks;
 
 namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
 {
@@ -13,11 +14,11 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
             _produtoRepository = produtoRepository;
         }
 
-        public ProdutoDto Executar(CreateProdutoDto dto)
+        public async Task<ProdutoDto> Executar(CreateProdutoDto dto)
         {
             var produto = new Produto(dto.RestauranteId, dto.Nome, dto.Quantidade, dto.Valor);
 
-            _produtoRepository.Adicionar(produto);
+            await _produtoRepository.Adicionar(produto);
 
             return new ProdutoDto
             {

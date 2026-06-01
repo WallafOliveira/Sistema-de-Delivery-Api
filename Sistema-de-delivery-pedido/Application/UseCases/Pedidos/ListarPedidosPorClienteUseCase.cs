@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Sistema_de_delivery_pedido.Application.DTOs.Pedidos;
 using Sistema_de_delivery_pedido.Domain.Interfaces;
 
@@ -12,9 +16,11 @@ namespace Sistema_de_delivery_pedido.Application.UseCases.Pedidos
             _pedidoRepository = pedidoRepository;
         }
 
-        public IEnumerable<PedidoDto> Executar(Guid clienteId)
+        public async Task<IEnumerable<PedidoDto>> Executar(Guid clienteId)
         {
-            return _pedidoRepository.ObterPorClienteId(clienteId).Select(pedido => new PedidoDto
+            var pedidos = await _pedidoRepository.ObterPorClienteId(clienteId);
+
+            return pedidos.Select(pedido => new PedidoDto
             {
                 Id = pedido.Id,
                 ClienteId = pedido.ClienteId,

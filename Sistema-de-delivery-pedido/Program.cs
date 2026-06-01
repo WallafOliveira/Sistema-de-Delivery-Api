@@ -34,6 +34,13 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Inicializa o banco de dados
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DeliveryDbContext>();
+    InitializeContext.Initialize(context);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

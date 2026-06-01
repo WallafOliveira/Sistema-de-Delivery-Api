@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Sistema_de_delivery_pedido.Application.DTOs.Pedidos;
 using Sistema_de_delivery_pedido.Domain.Interfaces;
 
@@ -12,9 +15,9 @@ namespace Sistema_de_delivery_pedido.Application.UseCases.Pedidos
             _pedidoRepository = pedidoRepository;
         }
 
-        public PedidoDto Executar(Guid id)
+        public async Task<PedidoDto> Executar(Guid id)
         {
-            var pedido = _pedidoRepository.ObterPorId(id)
+            var pedido = await _pedidoRepository.ObterPorId(id)
                 ?? throw new Exception("Pedido não encontrado.");
 
             return new PedidoDto

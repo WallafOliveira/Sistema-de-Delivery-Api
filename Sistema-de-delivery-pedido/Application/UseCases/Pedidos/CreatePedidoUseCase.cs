@@ -1,5 +1,8 @@
-using DataApplications.Entities;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Sistema_de_delivery_pedido.Application.DTOs.Pedidos;
+using Sistema_de_delivery_pedido.Domain.Entities;
 using Sistema_de_delivery_pedido.Domain.Interfaces;
 
 namespace Sistema_de_delivery_pedido.Application.UseCases.Pedidos
@@ -13,7 +16,7 @@ namespace Sistema_de_delivery_pedido.Application.UseCases.Pedidos
             _pedidoRepository = pedidoRepository;
         }
 
-        public PedidoDto Executar(CreatePedidoDto dto)
+        public async Task<PedidoDto> Executar(CreatePedidoDto dto)
         {
             if (dto.Itens == null || dto.Itens.Count == 0)
                 throw new ArgumentException("O pedido deve conter ao menos um item.");
@@ -26,7 +29,7 @@ namespace Sistema_de_delivery_pedido.Application.UseCases.Pedidos
                 pedido.AdicionarItem(item);
             }
 
-            _pedidoRepository.Adicionar(pedido);
+            await _pedidoRepository.Adicionar(pedido);
 
             return MapToDto(pedido);
         }
