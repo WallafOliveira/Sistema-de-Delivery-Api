@@ -1,5 +1,6 @@
 using Sistema_de_delivery_back.Application.DTOs;
-using Sistema_de_delivery_back.Domain.Interfaces;
+using Sistema_de_delivery_back.Domain.Repositories;
+using System.Threading.Tasks; 
 
 namespace Sistema_de_delivery_back.Application.UseCases;
 
@@ -11,10 +12,9 @@ public class BuscarUsuarioPorIdUseCase
     {
         _usuarioRepository = usuarioRepository;
     }
-
-    public UsuarioDto? Execute(Guid id)
+    public async Task<UsuarioDto?> Execute(Guid id)
     {
-        var usuario = _usuarioRepository.BuscarPorId(id);
+        var usuario = await _usuarioRepository.BuscarPorId(id);
 
         if (usuario == null)
         {

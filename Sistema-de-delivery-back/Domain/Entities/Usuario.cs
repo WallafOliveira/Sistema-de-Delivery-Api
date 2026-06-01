@@ -1,52 +1,49 @@
-using System.ComponentModel.DataAnnotations;
+using System;
 
-namespace Sistema_de_delivery_back.Domain.Entities;
-
-public class Usuario
+namespace Sistema_de_delivery_back.Domain.Entities
 {
-    [Key]
-    public Guid Id { get; private set; }
-    public string Nome { get; private set; } = null!;
-    public string Email { get; private set; } = null!;
-    public string Telefone { get; private set; } = null!;
-    public string Tipo { get; private set; } = null!;
-    public string SenhaHash { get; private set; } = null!;
-    public DateTime DataCriacao { get; private set; }
-    public DateTime? DataAtualizacao { get; private set; }
-    public bool Ativo { get; private set; }
-
-    public Usuario(string nome, string email, string telefone, string tipo, string senhaHash)
+    public class Usuario
     {
-        Id = Guid.NewGuid();
-        Nome = nome;
-        Email = email;
-        Telefone = telefone;
-        Tipo = tipo;
-        SenhaHash = senhaHash;
-        DataCriacao = DateTime.UtcNow;
-        Ativo = true;
-    }
+        public Guid Id { get; private set; }
+        public string Nome { get; private set; } = null!;
+        public string Email { get; private set; } = null!;
+        public string Telefone { get; private set; } = null!;
+        public string Tipo { get; private set; } = null!;
+        public string SenhaHash { get; private set; } = null!;
+        public DateTime DataCriacao { get; private set; }
+        public DateTime? DataAtualizacao { get; private set; }
+        public bool Ativo { get; private set; }
 
-    private Usuario() { }
+        // Construtor privado exigido para o Activator.CreateInstance no repositório
+        private Usuario() { }
 
-    public void AtualizarDados(string nome, string email, string telefone, string tipo)
-    {
-        Nome = nome;
-        Email = email;
-        Telefone = telefone;
-        Tipo = tipo;
-        DataAtualizacao = DateTime.UtcNow;
-    }
+        public Usuario(string nome, string email, string telefone, string tipo, string senhaHash)
+        {
+            if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("E-mail é obrigatório.");
 
-    public void AtualizarSenha(string novaSenhaHash)
-    {
-        SenhaHash = novaSenhaHash;
-        DataAtualizacao = DateTime.UtcNow;
-    }
+            Id = Guid.NewGuid();
+            Nome = nome;
+            Email = email;
+            Telefone = telefone;
+            Tipo = tipo;
+            SenhaHash = senhaHash;
+            DataCriacao = DateTime.UtcNow;
+            Ativo = true;
+        }
 
-    public void Desativar()
-    {
-        Ativo = false;
-        DataAtualizacao = DateTime.UtcNow;
+        public void AtualizarDados(string nome, string email, string telefone, string tipo)
+        {
+            Nome = nome;
+            Email = email;
+            Telefone = telefone;
+            Tipo = tipo;
+            DataAtualizacao = DateTime.UtcNow;
+        }
+
+        public void Desativar()
+        {
+            Ativo = false;
+            DataAtualizacao = DateTime.UtcNow;
+        }
     }
 }

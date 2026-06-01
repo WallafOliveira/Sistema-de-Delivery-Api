@@ -1,12 +1,17 @@
-﻿using DataApplications.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Sistema_de_delivery_back.Domain.Entities;
 
-namespace Sistema_de_delivery_back.Domain.Interfaces;
-
-public interface IUsuarioRepository
+namespace Sistema_de_delivery_back.Domain.Repositories
 {
-    void Adicionar(Usuario usuario);
-    void Atualizar(Usuario usuario);
-    List<Usuario> ListarTodos();
-    Usuario? BuscarPorId(Guid id);
-    Usuario? BuscarPorEmail(string email);
+    public interface IUsuarioRepository
+    {
+        Task<Usuario> Adicionar(Usuario usuario);
+        Task<Usuario?> BuscarPorId(Guid id);
+        Task<Usuario?> BuscarPorEmail(string email);
+        Task<IEnumerable<Usuario>> ListarTodos();
+        Task<Usuario?> Atualizar(Guid id, Usuario usuario);
+        Task<bool> DeleteAsync(Guid id);
+    }
 }

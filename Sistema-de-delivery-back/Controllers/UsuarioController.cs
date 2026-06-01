@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Sistema_de_delivery_back.Application.DTOs;
 using Sistema_de_delivery_back.Application.UseCases;
 using Sistema_de_delivery_back.Application.UseCases.Usuarios;
+using System;
+using System.Threading.Tasks; // Necessário para o Task
 
 namespace Sistema_de_delivery_back.Controllers;
 
@@ -27,11 +29,13 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateUsuarioDto dto)
+    // 1. Transformado em 'async Task<IActionResult>'
+    public async Task<IActionResult> Create([FromBody] CreateUsuarioDto dto)
     {
         try
         {
-            var resultado = _createUsuarioUseCase.Execute(dto);
+            // 2. Adicionado o 'await'
+            var resultado = await _createUsuarioUseCase.Execute(dto);
             return CreatedAtAction(nameof(GetById), new { id = resultado.Id }, resultado);
         }
         catch (Exception ex)
@@ -41,11 +45,11 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(Guid id, [FromBody] UpdateUsuarioDto dto)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUsuarioDto dto)
     {
         try
         {
-            var resultado = _updateUsuarioUseCase.Execute(id, dto);
+            var resultado = await _updateUsuarioUseCase.Execute(id, dto);
             return Ok(resultado);
         }
         catch (Exception ex)
@@ -55,11 +59,11 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
         try
         {
-            var resultado = _listarUsuariosUseCase.Execute();
+            var resultado = await _listarUsuariosUseCase.Execute();
             return Ok(resultado);
         }
         catch (Exception ex)
@@ -69,12 +73,12 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         try
         {
-            var resultado = _buscarUsuarioPorIdUseCase.Execute(id);
-            
+            var resultado = await _buscarUsuarioPorIdUseCase.Execute(id);
+
             if (resultado == null)
             {
                 return NotFound(new { message = $"Usuário com ID {id} não encontrado." });

@@ -1,5 +1,7 @@
 using Sistema_de_delivery_back.Application.DTOs;
-using Sistema_de_delivery_back.Domain.Interfaces;
+using Sistema_de_delivery_back.Domain.Repositories;
+using System;
+using System.Threading.Tasks; // Lembre-se de importar
 
 namespace Sistema_de_delivery_back.Application.UseCases;
 
@@ -11,10 +13,9 @@ public class UpdateUsuarioUseCase
     {
         _usuarioRepository = usuarioRepository;
     }
-
-    public UsuarioDto Execute(Guid id, UpdateUsuarioDto dto)
+    public async Task<UsuarioDto> Execute(Guid id, UpdateUsuarioDto dto)
     {
-        var usuario = _usuarioRepository.BuscarPorId(id);
+        var usuario = await _usuarioRepository.BuscarPorId(id);
 
         if (usuario == null)
         {
@@ -23,7 +24,7 @@ public class UpdateUsuarioUseCase
 
         usuario.AtualizarDados(dto.Nome, dto.Email, dto.Telefone, dto.Tipo);
 
-        _usuarioRepository.Atualizar(usuario);
+        await _usuarioRepository.Atualizar(id, usuario);
 
         return new UsuarioDto
         {
