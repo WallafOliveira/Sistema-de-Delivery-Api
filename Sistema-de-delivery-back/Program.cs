@@ -22,6 +22,17 @@ builder.Services.AddScoped<UpdateUsuarioUseCase>();
 builder.Services.AddScoped<ListarUsuariosUseCase>();
 builder.Services.AddScoped<BuscarUsuarioPorIdUseCase>();
 
+// CORS Configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddControllers();
 
 // Swagger

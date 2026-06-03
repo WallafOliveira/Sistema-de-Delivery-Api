@@ -1,4 +1,4 @@
-using DataApplications.Data;
+Ôªøusing DataApplications.Data;
 using Microsoft.EntityFrameworkCore;
 using Sistema_de_delivery_cardapio.Application.UseCases.Produtos;
 using Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes;
@@ -36,7 +36,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "Sistema de Delivery - Card·pio", Version = "v1" });
+    c.SwaggerDoc("v1", new() { Title = "Sistema de Delivery - Card√°pio", Version = "v1" });
 });
 
 var app = builder.Build();
@@ -51,8 +51,10 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Card·pio v1"));
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Card√°pio v1"));
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

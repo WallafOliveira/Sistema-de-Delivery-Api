@@ -29,12 +29,10 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    // 1. Transformado em 'async Task<IActionResult>'
     public async Task<IActionResult> Create([FromBody] CreateUsuarioDto dto)
     {
         try
         {
-            // 2. Adicionado o 'await'
             var resultado = await _createUsuarioUseCase.Execute(dto);
             return CreatedAtAction(nameof(GetById), new { id = resultado.Id }, resultado);
         }
