@@ -15,6 +15,7 @@ public class UsuarioController : ControllerBase
     private readonly UpdateUsuarioUseCase _updateUsuarioUseCase;
     private readonly ListarUsuariosUseCase _listarUsuariosUseCase;
     private readonly BuscarUsuarioPorIdUseCase _buscarUsuarioPorIdUseCase;
+    private readonly LoginUsuarioUseCase _loginUseCase;
 
     public UsuarioController(
         CreateUsuarioUseCase createUsuarioUseCase,
@@ -88,5 +89,16 @@ public class UsuarioController : ControllerBase
         {
             return BadRequest(new { message = ex.Message });
         }
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+    {
+        var usuario = await _loginUseCase.ExecutarAsync(loginDto);
+
+        if (usuario is null)
+            return Unauthorized();
+
+        return Ok(usuario);
     }
 }

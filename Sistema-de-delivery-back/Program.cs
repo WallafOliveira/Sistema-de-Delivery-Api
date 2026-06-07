@@ -21,6 +21,7 @@ builder.Services.AddScoped<CreateUsuarioUseCase>();
 builder.Services.AddScoped<UpdateUsuarioUseCase>();
 builder.Services.AddScoped<ListarUsuariosUseCase>();
 builder.Services.AddScoped<BuscarUsuarioPorIdUseCase>();
+builder.Services.AddScoped<LoginUsuarioUseCase>();
 
 // CORS Configuration
 builder.Services.AddCors(options =>
