@@ -16,7 +16,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes
 
         public async Task<RestauranteDto> Execute(CreateRestauranteDto dto)
         {
-            var restaurante = new Restaurante(dto.Nome, dto.CPNJ, dto.Endereco);
+            var restaurante = new Restaurante(dto.Nome, dto.CPNJ, dto.Endereco, dto.Logo);
 
             await _restauranteRepository.Adicionar(restaurante);
 
@@ -26,6 +26,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes
                 Nome = restaurante.Nome,
                 CPNJ = restaurante.CPNJ,
                 Endereco = restaurante.Endereco,
+                Logo = restaurante.Logo,
                 EstaAberto = restaurante.EstaAberto
             };
         }

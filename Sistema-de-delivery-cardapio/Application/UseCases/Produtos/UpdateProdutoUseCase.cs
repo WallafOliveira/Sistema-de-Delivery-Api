@@ -21,7 +21,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
             if (produto == null)
                 throw new Exception("Produto não encontrado.");
 
-            produto.AtualizarDetalhes(dto.Nome, dto.Quantidade, dto.Valor);
+            produto.AtualizarDetalhes(dto.Nome, dto.Quantidade, dto.Valor, dto.ImagemProduto);
 
             var produtoAtualizado = await _produtoRepository.Atualizar(dto.Id, produto);
 
@@ -33,6 +33,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
                 Id = produtoAtualizado.Id,
                 RestauranteId = produtoAtualizado.RestauranteId,
                 Nome = produtoAtualizado.Nome,
+                ImagemProduto = produtoAtualizado.ImagemProduto,
                 Quantidade = produtoAtualizado.Quantidade,
                 Valor = produtoAtualizado.Valor
             };

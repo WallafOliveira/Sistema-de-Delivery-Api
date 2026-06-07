@@ -10,6 +10,7 @@ namespace Sistema_de_delivery_back.Domain.Entities
         public string Telefone { get; private set; } = null!;
         public string Tipo { get; private set; } = null!;
         public string SenhaHash { get; private set; } = null!;
+        public Guid? RestauranteId { get; private set; }
         public DateTime DataCriacao { get; private set; }
         public DateTime? DataAtualizacao { get; private set; }
         public bool Ativo { get; private set; }
@@ -17,7 +18,7 @@ namespace Sistema_de_delivery_back.Domain.Entities
         // Construtor privado exigido para o Activator.CreateInstance no repositório
         private Usuario() { }
 
-        public Usuario(string nome, string email, string telefone, string tipo, string senhaHash)
+        public Usuario(string nome, string email, string telefone, string tipo, string senhaHash, Guid? restauranteId = null)
         {
             if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("E-mail é obrigatório.");
 
@@ -27,16 +28,18 @@ namespace Sistema_de_delivery_back.Domain.Entities
             Telefone = telefone;
             Tipo = tipo;
             SenhaHash = senhaHash;
+            RestauranteId = restauranteId;
             DataCriacao = DateTime.UtcNow;
             Ativo = true;
         }
 
-        public void AtualizarDados(string nome, string email, string telefone, string tipo)
+        public void AtualizarDados(string nome, string email, string telefone, string tipo, Guid? restauranteId = null)
         {
             Nome = nome;
             Email = email;
             Telefone = telefone;
             Tipo = tipo;
+            RestauranteId = restauranteId;
             DataAtualizacao = DateTime.UtcNow;
         }
 

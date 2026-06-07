@@ -57,6 +57,10 @@ public class DeliveryDbContext : DbContext
             .IsUnique()
             .HasDatabaseName("IX_Usuarios_Email");
 
+        modelBuilder.Entity<UsuarioModel>()
+            .HasIndex(u => u.RestauranteId)
+            .HasDatabaseName("IX_Usuarios_RestauranteId");
+
         // Configuração de precisão decimal
         modelBuilder.Entity<PedidoModel>()
             .Property(p => p.ValorTotal)

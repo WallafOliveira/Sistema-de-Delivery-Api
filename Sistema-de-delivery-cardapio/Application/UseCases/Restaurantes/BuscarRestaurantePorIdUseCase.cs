@@ -27,6 +27,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes
                 Nome = restaurante.Nome,
                 CPNJ = restaurante.CPNJ,
                 Endereco = restaurante.Endereco,
+                Logo = restaurante.Logo,
                 EstaAberto = restaurante.EstaAberto
             };
         }

@@ -29,6 +29,8 @@ namespace DataApplications.Models
         [MaxLength(500)]
         public string SenhaHash { get; set; } = null!;
 
+        public Guid? RestauranteId { get; set; }
+
         [Required]
         public DateTime DataCriacao { get; set; }
 

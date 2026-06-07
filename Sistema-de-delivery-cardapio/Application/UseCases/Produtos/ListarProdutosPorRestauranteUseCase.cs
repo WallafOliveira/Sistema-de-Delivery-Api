@@ -25,6 +25,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
                 Id = p.Id,
                 RestauranteId = p.RestauranteId,
                 Nome = p.Nome,
+                ImagemProduto = p.ImagemProduto,
                 Quantidade = p.Quantidade,
                 Valor = p.Valor
             });

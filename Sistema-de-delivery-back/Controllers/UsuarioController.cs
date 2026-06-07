@@ -21,12 +21,14 @@ public class UsuarioController : ControllerBase
         CreateUsuarioUseCase createUsuarioUseCase,
         UpdateUsuarioUseCase updateUsuarioUseCase,
         ListarUsuariosUseCase listarUsuariosUseCase,
-        BuscarUsuarioPorIdUseCase buscarUsuarioPorIdUseCase)
+        BuscarUsuarioPorIdUseCase buscarUsuarioPorIdUseCase,
+        LoginUsuarioUseCase loginUsuarioUseCase)
     {
         _createUsuarioUseCase = createUsuarioUseCase;
         _updateUsuarioUseCase = updateUsuarioUseCase;
         _listarUsuariosUseCase = listarUsuariosUseCase;
         _buscarUsuarioPorIdUseCase = buscarUsuarioPorIdUseCase;
+        _loginUseCase = loginUsuarioUseCase;
     }
 
     [HttpPost]

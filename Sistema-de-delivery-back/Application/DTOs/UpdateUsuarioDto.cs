@@ -6,6 +6,6 @@ public class UpdateUsuarioDto
     public string Email { get; set; } = null!;
     public string Telefone { get; set; } = null!;
     public string Tipo { get; set; } = null!;
-
     public string Senha { get; set; } = null!;
+    public Guid? RestauranteId { get; set; }
 }

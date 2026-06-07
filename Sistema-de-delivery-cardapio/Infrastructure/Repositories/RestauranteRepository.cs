@@ -27,6 +27,7 @@ namespace Sistema_de_delivery_cardapio.Infrastructure.Repositories
                 Nome = restaurante.Nome,
                 CPNJ = restaurante.CPNJ,
                 Endereco = restaurante.Endereco,
+                Logo = restaurante.Logo,
                 EstaAberto = restaurante.EstaAberto,
                 DataCriacao = restaurante.DataCriacao,
                 DataAtualizacao = restaurante.DataAtualizacao,
@@ -48,6 +49,7 @@ namespace Sistema_de_delivery_cardapio.Infrastructure.Repositories
             existing.Nome = restaurante.Nome;
             existing.CPNJ = restaurante.CPNJ;
             existing.Endereco = restaurante.Endereco;
+            existing.Logo = restaurante.Logo;
             existing.EstaAberto = restaurante.EstaAberto;
             existing.DataAtualizacao = restaurante.DataAtualizacao;
             existing.Ativo = restaurante.Ativo;
@@ -102,6 +104,7 @@ namespace Sistema_de_delivery_cardapio.Infrastructure.Repositories
             typeof(Restaurante).GetProperty("Nome")?.SetValue(restaurante, m.Nome);
             typeof(Restaurante).GetProperty("CPNJ")?.SetValue(restaurante, m.CPNJ);
             typeof(Restaurante).GetProperty("Endereco")?.SetValue(restaurante, m.Endereco);
+            typeof(Restaurante).GetProperty("Logo")?.SetValue(restaurante, m.Logo);
             typeof(Restaurante).GetProperty("EstaAberto")?.SetValue(restaurante, m.EstaAberto);
             typeof(Restaurante).GetProperty("DataCriacao")?.SetValue(restaurante, m.DataCriacao);
             typeof(Restaurante).GetProperty("DataAtualizacao")?.SetValue(restaurante, m.DataAtualizacao);

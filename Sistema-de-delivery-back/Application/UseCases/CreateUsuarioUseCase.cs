@@ -25,7 +25,7 @@ public class CreateUsuarioUseCase
 
         var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha);
 
-        var usuario = new Usuario(dto.Nome, dto.Email, dto.Telefone, dto.Tipo, senhaHash);
+        var usuario = new Usuario(dto.Nome, dto.Email, dto.Telefone, dto.Tipo, senhaHash, dto.RestauranteId);
 
         await _usuarioRepository.Adicionar(usuario);
 
@@ -35,7 +35,8 @@ public class CreateUsuarioUseCase
             Nome = usuario.Nome,
             Email = usuario.Email,
             Telefone = usuario.Telefone,
-            Tipo = usuario.Tipo
+            Tipo = usuario.Tipo,
+            RestauranteId = usuario.RestauranteId
         };
     }
 }

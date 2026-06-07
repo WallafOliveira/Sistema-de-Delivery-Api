@@ -16,6 +16,9 @@ namespace DataApplications.Models
         [MaxLength(200)]
         public string Nome { get; set; } = null!;
 
+        [MaxLength(1000)]
+        public string? ImagemProduto { get; set; }
+
         [Required]
         public int Quantidade { get; set; }
 

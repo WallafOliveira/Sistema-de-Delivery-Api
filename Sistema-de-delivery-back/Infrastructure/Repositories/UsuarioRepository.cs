@@ -28,6 +28,7 @@ namespace Sistema_de_delivery_back.Infrastructure.Repositories
                 Telefone = usuario.Telefone,
                 Tipo = usuario.Tipo,
                 SenhaHash = usuario.SenhaHash,
+                RestauranteId = usuario.RestauranteId,
                 DataCriacao = usuario.DataCriacao,
                 Ativo = usuario.Ativo
             };
@@ -77,6 +78,7 @@ namespace Sistema_de_delivery_back.Infrastructure.Repositories
             existing.Email = usuario.Email;
             existing.Telefone = usuario.Telefone;
             existing.Tipo = usuario.Tipo;
+            existing.RestauranteId = usuario.RestauranteId;
             existing.Ativo = usuario.Ativo;
             existing.DataAtualizacao = usuario.DataAtualizacao;
 
@@ -106,6 +108,7 @@ namespace Sistema_de_delivery_back.Infrastructure.Repositories
             typeof(Usuario).GetProperty("Telefone")?.SetValue(usuario, m.Telefone);
             typeof(Usuario).GetProperty("Tipo")?.SetValue(usuario, m.Tipo);
             typeof(Usuario).GetProperty("SenhaHash")?.SetValue(usuario, m.SenhaHash);
+            typeof(Usuario).GetProperty("RestauranteId")?.SetValue(usuario, m.RestauranteId);
             typeof(Usuario).GetProperty("DataCriacao")?.SetValue(usuario, m.DataCriacao);
             typeof(Usuario).GetProperty("DataAtualizacao")?.SetValue(usuario, m.DataAtualizacao);
             typeof(Usuario).GetProperty("Ativo")?.SetValue(usuario, m.Ativo);

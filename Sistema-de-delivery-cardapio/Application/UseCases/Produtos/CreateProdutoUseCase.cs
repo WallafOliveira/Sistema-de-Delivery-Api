@@ -16,7 +16,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
 
         public async Task<ProdutoDto> Executar(CreateProdutoDto dto)
         {
-            var produto = new Produto(dto.RestauranteId, dto.Nome, dto.Quantidade, dto.Valor);
+            var produto = new Produto(dto.RestauranteId, dto.Nome, dto.Quantidade, dto.Valor, dto.ImagemProduto);
 
             await _produtoRepository.Adicionar(produto);
 
@@ -25,6 +25,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Produtos
                 Id = produto.Id,
                 RestauranteId = produto.RestauranteId,
                 Nome = produto.Nome,
+                ImagemProduto = produto.ImagemProduto,
                 Quantidade = produto.Quantidade,
                 Valor = produto.Valor
             };

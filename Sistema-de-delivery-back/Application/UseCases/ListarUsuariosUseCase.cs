@@ -25,7 +25,8 @@ public class ListarUsuariosUseCase
             Nome = u.Nome,
             Email = u.Email,
             Telefone = u.Telefone,
-            Tipo = u.Tipo
+            Tipo = u.Tipo,
+            RestauranteId = u.RestauranteId
         }).ToList();
     }
 }

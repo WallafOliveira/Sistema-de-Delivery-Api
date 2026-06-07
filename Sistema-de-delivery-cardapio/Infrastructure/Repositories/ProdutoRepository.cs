@@ -26,6 +26,7 @@ namespace Sistema_de_delivery_cardapio.Infrastructure.Repositories
                 Id = produto.Id,
                 RestauranteId = produto.RestauranteId,
                 Nome = produto.Nome,
+                ImagemProduto = produto.ImagemProduto,
                 Quantidade = produto.Quantidade,
                 Valor = produto.Valor,
                 DataCriacao = produto.DataCriacao,
@@ -46,6 +47,7 @@ namespace Sistema_de_delivery_cardapio.Infrastructure.Repositories
             if (existing is null) return null;
 
             existing.Nome = produto.Nome;
+            existing.ImagemProduto = produto.ImagemProduto;
             existing.Quantidade = produto.Quantidade;
             existing.Valor = produto.Valor;
             existing.DataAtualizacao = produto.DataAtualizacao;
@@ -100,6 +102,7 @@ namespace Sistema_de_delivery_cardapio.Infrastructure.Repositories
             typeof(Produto).GetProperty("Id")?.SetValue(produto, m.Id);
             typeof(Produto).GetProperty("RestauranteId")?.SetValue(produto, m.RestauranteId);
             typeof(Produto).GetProperty("Nome")?.SetValue(produto, m.Nome);
+            typeof(Produto).GetProperty("ImagemProduto")?.SetValue(produto, m.ImagemProduto);
             typeof(Produto).GetProperty("Quantidade")?.SetValue(produto, m.Quantidade);
             typeof(Produto).GetProperty("Valor")?.SetValue(produto, m.Valor);
             typeof(Produto).GetProperty("DataCriacao")?.SetValue(produto, m.DataCriacao);

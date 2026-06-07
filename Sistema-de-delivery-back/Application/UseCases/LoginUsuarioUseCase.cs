@@ -16,7 +16,7 @@ public class LoginUsuarioUseCase
     {
         var usuario = await _usuarioRepository.BuscarPorEmail(loginDto.Email);
 
-        if (usuario is null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, usuario.SenhaHash))
+        if (usuario is null || !BCrypt.Net.BCrypt.Verify(loginDto.Senha, usuario.SenhaHash))
             return null;
 
         return new UsuarioDto
@@ -25,7 +25,8 @@ public class LoginUsuarioUseCase
             Nome = usuario.Nome,
             Email = usuario.Email,
             Telefone = usuario.Telefone,
-            Tipo = usuario.Tipo
+            Tipo = usuario.Tipo,
+            RestauranteId = usuario.RestauranteId
         };
     }
 }

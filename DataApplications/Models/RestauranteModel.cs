@@ -21,6 +21,9 @@ namespace DataApplications.Models
         [MaxLength(500)]
         public string Endereco { get; set; } = null!;
 
+        [MaxLength(1000)]
+        public string? Logo { get; set; }
+
         [Required]
         public bool EstaAberto { get; set; }
 

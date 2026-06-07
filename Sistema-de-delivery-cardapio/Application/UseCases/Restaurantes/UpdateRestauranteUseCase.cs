@@ -21,7 +21,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes
             if (restaurante == null)
                 throw new Exception($"Restaurante com ID {id} não encontrado.");
 
-            restaurante.AtualizarDados(dto.Nome, dto.CPNJ, dto.Endereco, dto.EstaAberto);
+            restaurante.AtualizarDados(dto.Nome, dto.CPNJ, dto.Endereco, dto.EstaAberto, dto.Logo);
 
             var restauranteAtualizado = await _restauranteRepository.Atualizar(id, restaurante);
 
@@ -34,6 +34,7 @@ namespace Sistema_de_delivery_cardapio.Application.UseCases.Restaurantes
                 Nome = restauranteAtualizado.Nome,
                 CPNJ = restauranteAtualizado.CPNJ,
                 Endereco = restauranteAtualizado.Endereco,
+                Logo = restauranteAtualizado.Logo,
                 EstaAberto = restauranteAtualizado.EstaAberto
             };
         }

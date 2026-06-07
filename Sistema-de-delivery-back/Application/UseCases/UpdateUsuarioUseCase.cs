@@ -22,7 +22,7 @@ public class UpdateUsuarioUseCase
             throw new Exception($"Usuário com ID {id} não encontrado.");
         }
 
-        usuario.AtualizarDados(dto.Nome, dto.Email, dto.Telefone, dto.Tipo);
+        usuario.AtualizarDados(dto.Nome, dto.Email, dto.Telefone, dto.Tipo, dto.RestauranteId);
 
         await _usuarioRepository.Atualizar(id, usuario);
 
@@ -32,7 +32,8 @@ public class UpdateUsuarioUseCase
             Nome = usuario.Nome,
             Email = usuario.Email,
             Telefone = usuario.Telefone,
-            Tipo = usuario.Tipo
+            Tipo = usuario.Tipo,
+            RestauranteId = usuario.RestauranteId
         };
     }
 }

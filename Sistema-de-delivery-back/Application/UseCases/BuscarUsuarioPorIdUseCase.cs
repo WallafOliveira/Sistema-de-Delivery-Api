@@ -27,7 +27,8 @@ public class BuscarUsuarioPorIdUseCase
             Nome = usuario.Nome,
             Email = usuario.Email,
             Telefone = usuario.Telefone,
-            Tipo = usuario.Tipo
+            Tipo = usuario.Tipo,
+            RestauranteId = usuario.RestauranteId
         };
     }
 }
