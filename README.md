@@ -304,5 +304,7 @@ curl -X POST http://localhost:5003/api/Pedido \
 | Documentação   | ✅ Completa           |
 | Frontend       | ⏳ Em desenvolvimento |
 
+
+
 ---
 
